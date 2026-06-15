@@ -1,35 +1,39 @@
-# Telegram 私聊双向留言机器人
+# Telegram 个人资料联系机器人
 
-一个适合个人博客、个人主页、频道简介使用的 Telegram 私聊双向机器人。
+一个适合放在 **Telegram 个人资料简介 Bio** 里的私聊双向联系机器人。
 
-用户给机器人发送消息后，机器人会自动转发给管理员；管理员直接回复那条转发消息，机器人会把回复发回给原用户。
+别人点进你的 Telegram 资料简介，打开机器人发送消息后，机器人会自动把消息转发给你；你直接回复那条转发消息，机器人会把回复发回给原用户。
 
 ```txt
-用户 → 私聊机器人 → 转发给管理员
-管理员 → 回复转发消息 → 发回给原用户
+别人 → 点击你资料简介里的机器人链接 → 给机器人发消息
+机器人 → 自动转发给你
+你 → 回复转发消息
+机器人 → 自动回给对方
 ```
 
 ---
 
 ## 功能特点
 
-- 支持私聊双向回复
+- 支持 Telegram 私聊双向回复
+- 适合放在 Telegram 个人资料简介里当联系方式
 - 支持文字、图片、视频、文件、语音、音频、贴纸、动图等消息
 - 支持 `/start`、`/help`、`/id` 命令
 - 适合部署到 Render / Railway / VPS / 宝塔面板
-- 配置简单，只需要 `BOT_TOKEN` 和 `OWNER_ID`
-- 代码带中文注释，适合新手学习和二次修改
+- 只需要配置 `BOT_TOKEN` 和 `OWNER_ID`
+- 代码已加中文注释，方便新手修改
 
 ---
 
 ## 适合场景
 
-- 个人博客留言入口
-- Telegram 私信客服
+- Telegram 个人资料联系方式
+- 不想公开自己主号时的私信入口
 - 匿名留言机器人
-- 个人主页联系方式
+- 个人主页联系入口
 - 项目反馈机器人
 - 频道投稿机器人
+- 客服/咨询机器人
 
 ---
 
@@ -42,7 +46,7 @@ Telegram-bot-main/
 ├─ render.yml            # Render 一键部署配置
 ├─ .env.example          # 环境变量示例文件
 ├─ .gitignore            # GitHub 忽略文件配置
-├─ TELEGRAM_PROFILE.md   # Telegram 主页简介文案
+├─ TELEGRAM_PROFILE.md   # Telegram 个人资料简介文案
 └─ README.md             # 项目说明文档
 ```
 
@@ -55,7 +59,7 @@ Telegram-bot-main/
 | 变量名 | 说明 |
 |---|---|
 | `BOT_TOKEN` | BotFather 给你的机器人 Token |
-| `OWNER_ID` | 管理员自己的 Telegram 数字 ID |
+| `OWNER_ID` | 你自己的 Telegram 数字 ID |
 
 注意：`OWNER_ID` 是纯数字，不是 `@用户名`。
 
@@ -135,7 +139,7 @@ python bot.py
 
 1. Fork 或上传本项目到 GitHub
 2. 打开 Render
-3. New Project / New Worker
+3. 新建 Worker / Background Worker
 4. 选择你的 GitHub 仓库
 5. Build Command 填：
 
@@ -162,23 +166,57 @@ OWNER_ID = 你的 Telegram 数字 ID
 
 ---
 
+## 怎么放到 Telegram 个人资料简介？
+
+部署成功后，你会得到一个机器人用户名，例如：
+
+```txt
+@your_contact_bot
+```
+
+你的机器人链接就是：
+
+```txt
+https://t.me/your_contact_bot
+```
+
+然后打开 Telegram：
+
+```txt
+设置 → 编辑个人资料 → 简介 / Bio → 粘贴文案和机器人链接
+```
+
+推荐简介：
+
+```txt
+联系我请点这里留言：https://t.me/your_contact_bot
+```
+
+更短一点：
+
+```txt
+私信留言：https://t.me/your_contact_bot
+```
+
+---
+
 ## 使用方法
 
-### 普通用户
+### 别人怎么联系你？
 
-用户打开机器人后，可以发送：
+对方点开你 Telegram 个人资料简介里的机器人链接，然后发送：
 
 ```txt
 /start
 ```
 
-然后直接发送文字、图片、视频、语音或文件即可。
+之后可以直接发送文字、图片、视频、语音或文件。
 
 ---
 
-### 管理员
+### 你怎么回复对方？
 
-管理员收到机器人转发的消息后，需要直接回复那条转发消息。
+你收到机器人转发的消息后，需要直接回复那条转发消息。
 
 正确操作：
 
@@ -222,16 +260,16 @@ OWNER_ID = 你的 Telegram 数字 ID
 |---|---|
 | 欢迎语 | `WELCOME_TEXT` |
 | 用户发送成功提示 | `USER_SENT_TEXT` |
-| 管理员回复成功提示 | `OWNER_REPLY_OK_TEXT` |
-| 管理员未正确回复提示 | `OWNER_NEED_REPLY_TEXT` |
+| 回复成功提示 | `OWNER_REPLY_OK_TEXT` |
+| 未正确回复提示 | `OWNER_NEED_REPLY_TEXT` |
 | 不支持消息提示 | `UNSUPPORTED_TEXT` |
 | 支持的消息类型 | `SUPPORTED_CONTENT_TYPES` |
 
 ---
 
-## Telegram 主页简介
+## Telegram 个人资料简介文案
 
-机器人主页简介文案已经放在：
+相关文案已经放在：
 
 ```txt
 TELEGRAM_PROFILE.md
@@ -239,13 +277,10 @@ TELEGRAM_PROFILE.md
 
 里面包含：
 
-- Bot Name
-- About 简短简介
-- Description 详细介绍
-- Commands 命令列表
-- 博客按钮文案
-
-可以直接复制到 BotFather 里使用。
+- 个人资料简介 Bio 文案
+- 机器人 About 简短简介
+- 机器人 Description 详细介绍
+- BotFather Commands 命令列表
 
 ---
 
@@ -263,9 +298,9 @@ TELEGRAM_PROFILE.md
 
 ---
 
-### 管理员回复失败怎么办？
+### 回复失败怎么办？
 
-管理员必须回复机器人转发过来的那条消息。
+你必须回复机器人转发过来的那条消息。
 
 如果只是直接给机器人发新消息，机器人不知道要回复给谁。
 
@@ -335,4 +370,4 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 ## License
 
-本项目可用于个人学习、个人博客、个人项目和二次修改。
+本项目可用于个人学习、个人主页、Telegram 联系入口和二次修改。

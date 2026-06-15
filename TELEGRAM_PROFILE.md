@@ -1,53 +1,109 @@
-# Telegram 机器人主页简介文案
+# Telegram 个人资料简介文案
 
-这些文案可以放到 BotFather 里设置机器人资料。
+这些文案是给你放到 **Telegram 个人资料 Bio / 简介** 里的。
 
-## 一、机器人名称 Bot Name
+把 `your_contact_bot` 换成你自己的机器人用户名。
+
+---
+
+## 一、最推荐版本
+
+适合直接放 Telegram 个人资料简介：
 
 ```txt
-个人博客留言机器人
+联系我请点这里留言：https://t.me/your_contact_bot
 ```
 
-## 二、机器人用户名 Username
+---
 
-用户名需要自己在 BotFather 创建，必须以 `bot` 结尾。
-
-示例：
+## 二、短一点的版本
 
 ```txt
-my_blog_message_bot
-contact_me_bot
-blog_contact_robot
+私信留言：https://t.me/your_contact_bot
 ```
 
-## 三、About 简短简介
-
-适合放在 Telegram 机器人资料页的短简介里。
+```txt
+有事找我：https://t.me/your_contact_bot
+```
 
 ```txt
-一个用于个人博客的 Telegram 留言机器人，支持私聊消息转发与管理员双向回复。
+留言入口：https://t.me/your_contact_bot
+```
+
+---
+
+## 三、比较正式的版本
+
+```txt
+合作 / 反馈 / 咨询请通过这里联系我：https://t.me/your_contact_bot
+```
+
+```txt
+不常看陌生私信，有事请通过机器人留言：https://t.me/your_contact_bot
+```
+
+---
+
+## 四、适合隐私一点的版本
+
+```txt
+不公开主号私信，有事请留言：https://t.me/your_contact_bot
+```
+
+```txt
+临时联系入口：https://t.me/your_contact_bot
+```
+
+---
+
+# Telegram 机器人主页资料文案
+
+下面这些是放到 BotFather 里设置机器人资料用的。
+
+## Bot Name 机器人名称
+
+```txt
+联系留言机器人
+```
+
+也可以用：
+
+```txt
+私信留言机器人
+```
+
+```txt
+个人联系机器人
+```
+
+---
+
+## About 简短简介
+
+```txt
+一个用于 Telegram 个人资料简介的留言联系机器人。
 ```
 
 更短版本：
 
 ```txt
-个人博客留言入口，支持 Telegram 双向私信回复。
+Telegram 私信留言入口。
 ```
 
-## 四、Description 详细介绍
+---
 
-适合放在 Telegram 机器人主页介绍里。
+## Description 详细介绍
 
 ```txt
-欢迎使用个人博客留言机器人。
+欢迎使用联系留言机器人。
 
-你可以直接发送文字、图片、视频、语音或文件，机器人会自动转交给管理员。
-管理员回复后，你会在这里收到回复。
-
-适合留言、反馈、合作联系、问题咨询等场景。
+你可以直接发送文字、图片、视频、语音或文件，消息会自动转交给本人。
+收到回复后，你会在这里看到回复内容。
 ```
 
-## 五、Commands 命令列表
+---
+
+## Commands 命令列表
 
 可以在 BotFather 的 `/setcommands` 里填写：
 
@@ -55,20 +111,4 @@ blog_contact_robot
 start - 开始使用机器人
 help - 查看使用说明
 id - 查看自己的 Telegram 数字 ID
-```
-
-## 六、博客按钮文案
-
-适合放在个人博客的联系按钮上：
-
-```txt
-通过 Telegram 联系我
-```
-
-```txt
-给我留言
-```
-
-```txt
-Telegram 私信留言
 ```

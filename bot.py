@@ -4,7 +4,7 @@ Telegram 私聊双向机器人
 功能说明：
 1. 普通用户私聊机器人，机器人会把消息转发给管理员。
 2. 管理员回复机器人转发过来的消息，机器人会把回复发回原用户。
-3. 适合作为个人博客、个人主页、频道简介里的联系入口。
+3. 适合作为 Telegram 个人资料简介里的联系入口。
 
 重要提醒：
 - BOT_TOKEN 和 OWNER_ID 必须放在环境变量里，不要写死在代码中。
@@ -81,18 +81,18 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 # 用户发送 /start 时看到的欢迎语
 WELCOME_TEXT = (
-    "你好，这里是个人博客留言机器人。\n\n"
+    "你好，这里是 Telegram 联系机器人。\n\n"
     "你可以直接发送文字、图片、视频、语音或文件，"
-    "消息会自动转交给管理员。"
+    "消息会自动转交给本人。"
 )
 
 # 用户消息成功转发给管理员后，用户看到的提示
-USER_SENT_TEXT = "消息已发送给管理员，请等待回复。"
+USER_SENT_TEXT = "消息已发送给本人，请等待回复。"
 
-# 管理员回复用户成功后，管理员看到的提示
+# 本人回复用户成功后，自己看到的提示
 OWNER_REPLY_OK_TEXT = "回复已发送给对方。"
 
-# 管理员没有回复指定消息时，机器人给管理员的提示
+# 本人没有回复指定消息时，机器人给出的提示
 OWNER_NEED_REPLY_TEXT = "请回复一条用户消息，我才能知道要发给谁。"
 
 # 机器人不支持某种消息时的提示
@@ -141,7 +141,7 @@ SUPPORTED_CONTENT_TYPES = [
 
 def build_user_info(message: Message) -> str:
     """
-    生成发送给管理员的用户信息文本。
+    生成发送给本人的用户信息文本。
 
     参数：
     - message：普通用户发送给机器人的消息对象
@@ -159,7 +159,7 @@ def build_user_info(message: Message) -> str:
     # username 可能为空，没有用户名时显示“无”
     username = f"@{user.username}" if user.username else "无"
 
-    # 返回最终显示给管理员的消息说明
+    # 返回最终显示给本人的消息说明
     return (
         "📩 收到一条新私信\n\n"
         f"昵称：{full_name or '无'}\n"
@@ -175,10 +175,10 @@ def build_user_info(message: Message) -> str:
 
 def send_owner_reply_to_user(message: Message, user_id: int) -> None:
     """
-    把管理员回复的内容发送给原用户。
+    把本人回复的内容发送给原用户。
 
     参数：
-    - message：管理员发给机器人的回复消息
+    - message：本人发给机器人的回复消息
     - user_id：原用户的 Telegram ID
     """
 
@@ -269,7 +269,7 @@ def help_command(message: Message) -> None:
         "使用方法：\n\n"
         "1. 直接给我发送消息，我会转交给管理员。\n"
         "2. 支持文字、图片、视频、文件、语音、音频、贴纸等。\n"
-        "3. 管理员回复后，你会在这里收到回复。"
+        "3. 我回复后，你会在这里收到回复。"
     )
     bot.reply_to(message, help_text)
 
@@ -298,22 +298,22 @@ def handle_message(message: Message) -> None:
     处理普通消息。
 
     分两种情况：
-    1. 消息来自管理员：说明管理员可能正在回复用户。
+    1. 消息来自本人：说明本人可能正在回复用户。
     2. 消息来自普通用户：把消息转发给管理员。
     """
 
     # ------------------------------
-    # 情况 1：管理员发来的消息
+    # 情况 1：本人发来的消息
     # ------------------------------
     if message.from_user.id == OWNER_ID:
 
-        # 管理员必须“回复”机器人转发过来的消息
+        # 本人必须“回复”机器人转发过来的消息
         # 如果没有 reply_to_message，机器人就不知道要回复给哪个用户
         if not message.reply_to_message:
             bot.reply_to(message, OWNER_NEED_REPLY_TEXT)
             return
 
-        # 获取管理员回复的那条消息 ID
+        # 获取本人回复的那条消息 ID
         replied_message_id = message.reply_to_message.message_id
 
         # 检查这条消息 ID 是否在 message_map 中
@@ -325,14 +325,14 @@ def handle_message(message: Message) -> None:
         target_user_id = message_map[replied_message_id]
 
         try:
-            # 把管理员回复的内容发送给原用户
+            # 把本人回复的内容发送给原用户
             send_owner_reply_to_user(message, target_user_id)
 
-            # 给管理员一个成功提示
+            # 给自己一个成功提示
             bot.reply_to(message, OWNER_REPLY_OK_TEXT)
 
             # 写入日志，方便后台查看
-            logger.info("管理员已回复用户：%s", target_user_id)
+            logger.info("本人已回复用户：%s", target_user_id)
 
         except Exception as exc:
             # 如果发送失败，把错误显示给管理员
@@ -346,12 +346,12 @@ def handle_message(message: Message) -> None:
     # ------------------------------
 
     try:
-        # 先把用户信息发送给管理员
+        # 先把用户信息发送给本人
         bot.send_message(OWNER_ID, build_user_info(message))
 
-        # 再把用户原消息转发给管理员
+        # 再把用户原消息转发给本人
         forwarded_message = bot.forward_message(
-            OWNER_ID,          # 目标：管理员
+            OWNER_ID,          # 目标：本人
             message.chat.id,   # 来源：用户聊天窗口
             message.message_id # 要转发的消息 ID
         )
@@ -363,7 +363,7 @@ def handle_message(message: Message) -> None:
         bot.reply_to(message, USER_SENT_TEXT)
 
         # 写入日志，方便后台查看
-        logger.info("已收到用户 %s 的消息，并转发给管理员", message.from_user.id)
+        logger.info("已收到用户 %s 的消息，并转发给本人", message.from_user.id)
 
     except Exception as exc:
         # 如果转发失败，把错误提示给用户
