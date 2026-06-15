@@ -58,8 +58,6 @@ Telegram-bio-contact-bot/
 ├─ render.yml            # Render 一键部署配置
 ├─ .env.example          # 环境变量示例文件
 ├─ .gitignore            # GitHub 忽略文件配置
-├─ TELEGRAM_PROFILE.md   # Telegram 个人资料 Bio 和 BotFather 文案
-├─ CHANGELOG.md          # 更新记录
 └─ README.md             # GitHub 仓库说明文档
 ```
 
