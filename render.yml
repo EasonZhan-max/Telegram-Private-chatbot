@@ -7,7 +7,7 @@ services:
   - type: worker
 
     # 服务名称，可以在 Render 后台显示
-    name: telegram-profile-contact-bot
+    name: telegram-bio-contact-bot
 
     # 运行环境：Python
     runtime: python
