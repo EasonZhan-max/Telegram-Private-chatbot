@@ -1,0 +1,19 @@
+# Render 部署配置文件
+# 作用：让 Render 知道这个项目应该如何安装、如何启动
+
+services:
+  # type: worker 表示后台服务
+  # Telegram 机器人不需要网页端口，所以不要用 web 服务
+  - type: worker
+
+    # 服务名称，可以在 Render 后台显示
+    name: telegram-contact-bot
+
+    # 运行环境：Python
+    runtime: python
+
+    # 构建命令：安装 requirements.txt 里的依赖
+    buildCommand: pip install -r requirements.txt
+
+    # 启动命令：运行机器人主程序
+    startCommand: python bot.py
